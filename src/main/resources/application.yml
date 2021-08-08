@@ -4,4 +4,11 @@ server:
   tomcat: 
     uri-encoding: UTF-8
 
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://47.107.104.201:3306/api
+    username: api
+    password: 888888
+
 
