@@ -6,6 +6,13 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.jdbc.core.JdbcTemplate;
 import online.alphateam.api.server.util.Pager;
+/**
+ * dao核心类，提供公共方法
+ * www.alphateam.online
+ * @Description 
+ * @date 2021-08-08 
+ * @author 梁文正 liangzongc@gmail.com
+ */
 public abstract class DaoFactory {
 	private JdbcTemplate jdbcTemplate;	
 	private String dbType;

@@ -15,7 +15,13 @@ import com.zaxxer.hikari.HikariDataSource;
 import online.alphateam.api.server.dao.ApiDaoImpl;
 import online.alphateam.api.server.dao.SystemDao;
 import online.alphateam.api.server.exception.ApiException;
-
+/**
+ * 
+ * www.alphateam.online
+ * @Description 
+ * @date 2021-08-08 
+ * @author 梁文正 liangzongc@gmail.com
+ */
 @Component
 public class DaoUtil {
 	private Map<String,ApiDaoImpl> daoContext=new HashMap<String, ApiDaoImpl>();
