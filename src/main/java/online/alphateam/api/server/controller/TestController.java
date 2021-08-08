@@ -1,13 +1,10 @@
 package online.alphateam.api.server.controller;
 
-import java.sql.SQLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,22 +17,24 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import online.alphateam.api.server.dao.ApiDaoImpl;
 import online.alphateam.api.server.dao.SystemDaoImpl;
+import online.alphateam.api.server.service.SystemServiceImpl;
+
 
 
 
 @Controller
 @RequestMapping("/test")
 public class TestController {	
+
+	@Autowired
+	private SystemServiceImpl service;
+	
 	@Autowired
 	private SystemDaoImpl dao;	
 	@RequestMapping("/demo")
 	public void test(HttpServletRequest request,HttpServletResponse response ) {
 		
-		System.out.println(9530);
-		
-		
-		
-		dao.test();
+		service.test();
 		
 	}
 	
