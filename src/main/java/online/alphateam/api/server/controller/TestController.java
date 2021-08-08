@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -25,15 +27,21 @@ import online.alphateam.api.server.dao.SystemDaoImpl;
 
 @Controller
 @RequestMapping("/test")
-public class TestController {	
+public class TestController {
+
+	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
+
 	@Autowired
 	private SystemDaoImpl dao;	
 	@RequestMapping("/demo")
 	public void test(HttpServletRequest request,HttpServletResponse response ) {
 		
 		System.out.println(9530);
-		
-		
+
+		logger.debug("debug");
+		logger.info("info");
+		logger.warn("warn");
+		logger.error("error");
 		
 		dao.test();
 		
