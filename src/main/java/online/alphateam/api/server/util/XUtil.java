@@ -16,9 +16,19 @@ public class XUtil {
 		try {
 			json=objectMapper.writeValueAsString(value);
 		} catch (JsonProcessingException e) {			
-			e.printStackTrace();
-			throw new RuntimeException("对象转JSON字符串失败");
+			throw new RuntimeException("对象转JSON字符串失败",e);
 		}		
 		return json;		
+	}
+	
+	public static String[] arrayFromString(String jsonArrayString) {
+		ObjectMapper objectMapper=new ObjectMapper();
+		String[] array;
+		try {
+			array=objectMapper.readValue(jsonArrayString, String[].class);
+		} catch (JsonProcessingException e) {			
+			throw new RuntimeException("JSON字符串转String[]失败",e);
+		}
+		return array;		
 	}
 }

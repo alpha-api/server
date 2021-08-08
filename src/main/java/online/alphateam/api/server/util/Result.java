@@ -10,7 +10,7 @@ public class Result<T> {
 	private Integer status;//成功[1] 失败[0] 
 	private String msg;//讯息
 	private T data;//数据
-	private String copyright;//版权信息	
+	private String copyright="梁文正（liangzongc@gmail.com）| Krypton（lqbnet@yeah.net）  ";//版权信息	
 	public Result() {
 		super();
 	}	

@@ -20,6 +20,7 @@ import online.alphateam.api.server.bean.bo.JwtBO;
 import online.alphateam.api.server.bean.po.JwtHeader;
 import online.alphateam.api.server.bean.po.JwtPayload;
 import online.alphateam.api.server.util.JwtUtil;
+import online.alphateam.api.server.util.SqlParser;
 
 
 
@@ -75,8 +76,8 @@ class ApiServerApplicationTests {
     	payload.setSub("user9527");
     	Long iat=System.currentTimeMillis();
     	Long exp=iat+30*24*60*60*1000l; 
-    	payload.setIat(1001l);
-    	payload.setExp(1002l);
+    	payload.setIat(iat);
+    	payload.setExp(exp);
     	String secret="PC2021";
     	
     	String token=JwtUtil.createToken(header, payload, secret);
@@ -163,14 +164,17 @@ class ApiServerApplicationTests {
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}    	
     	
- 
+    }
+    @Test
+    public void sqlParser() {
+    	SqlParser parser=new SqlParser();
+    	String alphaSql=" select * from User where name like #{%name%} or age=#{age} or class in (#{myClass...}) ";
     	
     	
-    	
-    	
-    	
+    	parser.parse(alphaSql, null);
+    	System.out.println(parser);    	
     }
 
 }

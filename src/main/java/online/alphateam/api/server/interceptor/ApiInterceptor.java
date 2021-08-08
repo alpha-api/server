@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,7 +26,7 @@ public class ApiInterceptor implements HandlerInterceptor {
 		String token=request.getHeader("token");	
 		
 		
-		Cookie cookie=new Cookie("token", "9528");
+		Cookie cookie=new Cookie("token", token);
 		cookie.setMaxAge(14*24*60*60);		
 		response.addCookie(cookie);
 		
