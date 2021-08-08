@@ -10,5 +10,13 @@ spring:
     url: jdbc:mysql://47.107.104.201:3306/api
     username: api
     password: 888888
+    
+    
+logging:
+  #level 日志等级 指定命名空间的日志输出
+  level:
+    online.alphateam.api: debug
+  #file 指定输出文件的存储路径
+  file: /home/admin/Java/logs/app.log
 
 
