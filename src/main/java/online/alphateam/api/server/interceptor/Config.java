@@ -8,10 +8,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupp
 @Configuration
 public class Config extends WebMvcConfigurationSupport {
 	@Autowired
-	private HandlerInterceptor apiInterceptor;
+	private HandlerInterceptor apiInterceptor;	
+	@Autowired
+	private HandlerInterceptor systemInterceptor;	
 	@Override
 	protected void addInterceptors(InterceptorRegistry registry) {		
 		registry.addInterceptor(apiInterceptor).addPathPatterns("/api/**");
+		registry.addInterceptor(systemInterceptor).addPathPatterns("/sys/**").excludePathPatterns("/sys/login");
 		super.addInterceptors(registry);
 	}
 

@@ -7,5 +7,5 @@ package online.alphateam.api.server.service;
  * @author 梁文正 liangzongc@gmail.com
  */
 public interface SystemService {
-
+	public String login(String userCode,String password);
 }

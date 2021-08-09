@@ -71,14 +71,14 @@ public abstract class DaoFactory {
 		
 		//1.获取总数量		
 		int index=sql.indexOf("from");		
-		String totalSql=" select COUNT(*) JDBCTOTAL " + sql.substring(index);				
+		String totalSql=" select COUNT(*) ALPHATOTAL " + sql.substring(index);				
 		Map<String,Object> jdbcTotal=null;
 		if(args != null && args.length > 0) {	
 			jdbcTotal=jdbcTemplate.queryForMap(totalSql,args);
 		}else {			
 			jdbcTotal=jdbcTemplate.queryForMap(totalSql);
 		}
-		total=Integer.parseInt(jdbcTotal.get("JDBCTOTAL").toString());		
+		total=Integer.parseInt(jdbcTotal.get("ALPHATOTAL").toString());		
 		if(startIndex > total) {//起始下标越界，返回一个空集			
 			pager=new Pager<Map<String,Object>>(pageNo, pageSize, total, list);
 			return pager;		
@@ -112,7 +112,7 @@ public abstract class DaoFactory {
 			params.add( (pageNo-1)*pageSize );
 			params.add( pageSize );						
 		}else {			
-			throw new NullPointerException("未拓展"+dbType+"的分页方法。");			
+			throw new NullPointerException("未研发"+dbType+"的分页API");			
 		}	
 		//3.执行分页查询	       
 		list=jdbcTemplate.queryForList(psql.toString(),params.toArray());

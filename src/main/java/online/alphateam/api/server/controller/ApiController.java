@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import online.alphateam.api.server.service.ApiService;
+import online.alphateam.api.server.util.Pager;
 import online.alphateam.api.server.util.Result;
 /**
  * 
@@ -27,7 +29,7 @@ public class ApiController {
 	@Autowired
 	ApiService apiService;
 	
-	@RequestMapping("/{module}/{api}")
+	@RequestMapping(value="/{module}/{api}",method = RequestMethod.GET)
 	@ResponseBody
 	public Result<Object> get(HttpServletRequest request,HttpServletResponse response,@PathVariable String module,@PathVariable String api){
 		Result<Object> result=new Result<Object>();		
@@ -39,7 +41,8 @@ public class ApiController {
 				result.setData(list);
 			}else {
 				//分页查询
-				
+				Pager<Map<String, Object>> pager=apiService.pager(request, module, api);
+				result.setData(pager);
 			}
 			result.setStatus(1);
 			result.setMsg("success");

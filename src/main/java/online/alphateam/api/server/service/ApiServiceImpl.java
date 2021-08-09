@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import online.alphateam.api.server.dao.ApiDao;
 import online.alphateam.api.server.util.DaoUtil;
+import online.alphateam.api.server.util.Pager;
 import online.alphateam.api.server.util.SqlParser;
 @Service
 public class ApiServiceImpl implements ApiService {
@@ -27,7 +28,21 @@ public class ApiServiceImpl implements ApiService {
 		
 		//3，获取数据源的dao实例		
 		ApiDao dao=daoUtil.get("1");		
-		return dao.list(parser.getSql(),parser.getParams().toArray());
+		return dao.list(sql,params.toArray());
+	}
+	@Override
+	public Pager<Map<String, Object>> pager(HttpServletRequest request, String module, String api) {
+		//1，查出API的配置信息，sql/参数的数据类型/数据源ID
+		String alphaSql=" select * from cinema_file where cinema_name like #{%name%} ";
+		//2，解析sql/参数
+		SqlParser parser=new SqlParser();
+		parser.parse(alphaSql, request);
+		String sql=parser.getSql();
+		List<Object> params=parser.getParams();
+		
+		//3，获取数据源的dao实例		
+		ApiDao dao=daoUtil.get("1");		
+		return dao.pager(sql,1,10,params.toArray());
 	}
 	
 }

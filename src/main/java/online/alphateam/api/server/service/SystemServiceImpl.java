@@ -10,4 +10,10 @@ public class SystemServiceImpl implements SystemService {
 	@Autowired
 	private SystemDao systemDao;
 
+	@Override
+	public String login(String userCode, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
