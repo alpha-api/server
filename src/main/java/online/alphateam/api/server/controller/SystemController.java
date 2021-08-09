@@ -29,7 +29,7 @@ public class SystemController {
 			String token=systemService.login(userCode, password);
 			result.success("登陆成功", token);
 		} catch (Exception e) {
-			logger.error("登陆失败", e);		
+			logger.error(userCode, e);		
 			result.error(e);			
 		}		
 		return result;

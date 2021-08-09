@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,6 +51,33 @@ public class ApiController {
 			result.setStatus(0);
 			result.setMsg(e.getMessage());
 		}		
+		return result;		
+	}
+	
+	@RequestMapping(value="/{module}/{api}",method = RequestMethod.POST)
+	@ResponseBody
+	public Result<Object> post(HttpServletRequest request,HttpServletResponse response,@PathVariable String module,@PathVariable String api,@RequestBody String payload){
+		Result<Object> result=new Result<Object>();		
+		
+		return result;		
+	}
+	
+	@RequestMapping(value="/{module}/{api}",method = RequestMethod.PUT)
+	@ResponseBody
+	public Result<Object> put(HttpServletRequest request,HttpServletResponse response,@PathVariable String module,@PathVariable String api,@RequestBody String payload){
+		Result<Object> result=new Result<Object>();		
+		
+		return result;		
+	}
+	
+	
+	
+	@RequestMapping(value="/{module}/{api}",method = RequestMethod.DELETE)
+	@ResponseBody
+	public Result<Object> delete(HttpServletRequest request,HttpServletResponse response,@PathVariable String module,@PathVariable String api,@RequestBody String payload){
+		//delete-无效方法request.getParameter,可以使用payload		
+		Result<Object> result=new Result<Object>();		
+		System.out.println( request.getParameter("name") );
 		return result;		
 	}
 }
