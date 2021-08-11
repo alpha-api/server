@@ -176,5 +176,11 @@ class ApiServerApplicationTests {
     	parser.parse(alphaSql, null);
     	System.out.println(parser);    	
     }
+    
+    @Test
+    public void root() {
+    	
+    	System.out.println(JwtUtil.md5("888888"));    	
+    }
 
 }

@@ -97,7 +97,7 @@ public class Result<T> {
 		if(isBusiness){
 			this.msg=e.getMessage();			
 		}else{
-			this.msg=UNKNOWN_REASON;			
+			this.msg=UNKNOWN_REASON+":"+e.getMessage();			
 		}
 	}
 	

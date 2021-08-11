@@ -34,23 +34,17 @@ public class ApiController {
 	@ResponseBody
 	public Result<Object> get(HttpServletRequest request,HttpServletResponse response,@PathVariable String module,@PathVariable String api){
 		Result<Object> result=new Result<Object>();		
-		String pageNo=request.getParameter("pageNo");		
-		try {
-			//判断是否需要进行分页查询
-			if( pageNo == null || "".equals(pageNo) ) {
-				List<Map<String,Object>> list=apiService.list(request, module, api);	
-				result.setData(list);
-			}else {
-				//分页查询
-				Pager<Map<String, Object>> pager=apiService.pager(request, module, api);
-				result.setData(pager);
-			}
-			result.setStatus(1);
-			result.setMsg("success");
-		} catch (Exception e) {
-			result.setStatus(0);
-			result.setMsg(e.getMessage());
-		}		
+		String pageNo=request.getParameter("pageNo");	
+		//判断是否需要进行分页查询
+		if( pageNo == null || "".equals(pageNo) ) {
+			List<Map<String,Object>> list=apiService.list(request, module, api);	
+			result.setData(list);
+		}else {
+			//分页查询
+			Pager<Map<String, Object>> pager=apiService.pager(request, module, api);
+			result.setData(pager);
+		}
+		result.success("查询成功");		
 		return result;		
 	}
 	
