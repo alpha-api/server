@@ -24,14 +24,9 @@ public class SystemController {
 	@ResponseBody
 	@RequestMapping(value="/login",method = RequestMethod.GET)
 	public Result<String> login(String userCode,String password,HttpServletRequest request,HttpServletResponse response){
-		Result<String> result=new Result<String>();
-		try {
-			String token=systemService.login(userCode, password);
-			result.success("登陆成功", token);
-		} catch (Exception e) {
-			logger.error(userCode, e);		
-			result.error(e);			
-		}		
+		Result<String> result=new Result<String>();	
+		String token=systemService.login(userCode, password);
+		result.success("登陆成功", token);		
 		return result;
 	}
 }
