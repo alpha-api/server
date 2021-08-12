@@ -4,7 +4,7 @@ package online.alphateam.api.server.exception;
  * www.alphateam.online
  * @Description 
  * @date 2021-08-09 
- * @author 梁文正 liangzongc@gmail.com
+ * @author Michael liangzongc@gmail.com
  */
 public class ExceptionUtil {
 	public static final Class<?>[] BUSINESS=new Class<?>[]{

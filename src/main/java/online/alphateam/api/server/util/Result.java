@@ -7,13 +7,13 @@ import online.alphateam.api.server.exception.ExceptionUtil;
  * www.alphateam.online
  * @Description 
  * @date 2021-08-07 
- * @author 梁文正 liangzongc@gmail.com
+ * @author Michael liangzongc@gmail.com
  */
 public class Result<T> {
 	private Integer status;//成功[1] 失败[0] 
 	private String msg;//讯息
 	private T data;//数据
-	private String copyright="梁文正（liangzongc@gmail.com）| Krypton（lqbnet@yeah.net）  ";//版权信息	
+	private String copyright="Michael（liangzongc@gmail.com）| Krypton（lqbnet@yeah.net）  ";//版权信息	
 	public static final Integer SUCCESS=1;//成功
 	public static final Integer ERROR=0;//失败
 	public static final String UNKNOWN_REASON="未知异常";

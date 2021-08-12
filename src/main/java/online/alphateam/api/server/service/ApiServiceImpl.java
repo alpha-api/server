@@ -27,7 +27,7 @@ public class ApiServiceImpl implements ApiService {
 		List<Object> params=parser.getParams();
 		
 		//3，获取数据源的dao实例		
-		ApiDao dao=daoUtil.get("2");		
+		ApiDao dao=daoUtil.get("1");		
 		return dao.list(sql,params.toArray());
 	}
 	@Override

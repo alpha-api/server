@@ -1,9 +1,12 @@
 package online.alphateam.api.server.exception;
-
+/**
+ * 
+ * www.alphateam.online
+ * @Description 
+ * @date 2021-08-12 
+ * @author Michael liangzongc@gmail.com
+ */
 public class ApiException extends RuntimeException {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Object data;	
 	public Object getData() {

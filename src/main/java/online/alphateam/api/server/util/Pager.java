@@ -67,7 +67,7 @@ public class Pager<T> {
 	 * @param list
 	 * @return
 	 * @date 2021-08-07 
-	 * @author 梁文正 liangzongc@gmail.com
+	 * @author Michael liangzongc@gmail.com
 	 */
 	public Pager<T> subPager(Integer currenPage,Integer pageSize,List<T> list){
 		if(pageSize == null || pageSize < 1)pageSize=PAGESIZE;		
@@ -100,7 +100,7 @@ public class Pager<T> {
 	 * @param list
 	 * @return
 	 * @date 2021-08-07 
-	 * @author 梁文正 liangzongc@gmail.com
+	 * @author Michael liangzongc@gmail.com
 	 */
 	public Pager<T> subPager(Integer currenPage,Integer pageSize,Integer total,List<T> list){
 		if(pageSize == null || pageSize < 1)pageSize=PAGESIZE;		

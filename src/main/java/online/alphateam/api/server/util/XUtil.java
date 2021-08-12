@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  * www.alphateam.online
  * @Description 
  * @date 2021-08-08 
- * @author 梁文正 liangzongc@gmail.com
+ * @author Michael liangzongc@gmail.com
  */
 public class XUtil {	
 	public static String toJSON(Object value) {
