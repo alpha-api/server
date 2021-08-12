@@ -1,4 +1,8 @@
 package online.alphateam.api.server.service;
+
+import online.alphateam.api.server.param.LoginParam;
+import online.alphateam.api.server.util.Result;
+
 /**
  * 
  * www.alphateam.online
@@ -7,5 +11,5 @@ package online.alphateam.api.server.service;
  * @author 梁文正 liangzongc@gmail.com
  */
 public interface SystemService {
-	public String login(String userCode,String password);
+	Result<String> login(LoginParam loginParam);
 }
