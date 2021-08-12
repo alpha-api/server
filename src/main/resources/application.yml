@@ -17,6 +17,5 @@ logging:
   level:
     online.alphateam.api: debug
   #file 指定输出文件的存储路径
-  file: /home/admin/Java/logs/app.log
-
-
+  file: 
+#  file: /home/admin/Java/logs/app.log
