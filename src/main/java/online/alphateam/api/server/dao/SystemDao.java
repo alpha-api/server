@@ -1,9 +1,8 @@
 package online.alphateam.api.server.dao;
 
-import online.alphateam.api.server.bean.po.SysUser;
-
-import java.util.List;
 import java.util.Map;
+
+import online.alphateam.api.server.bean.po.SysUser;
 /**
  * 系统模块的dao
  * www.alphateam.online

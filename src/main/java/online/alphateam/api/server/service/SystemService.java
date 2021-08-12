@@ -1,6 +1,6 @@
 package online.alphateam.api.server.service;
 
-import online.alphateam.api.server.param.LoginParam;
+import online.alphateam.api.server.bean.param.LoginParam;
 import online.alphateam.api.server.util.Result;
 
 /**

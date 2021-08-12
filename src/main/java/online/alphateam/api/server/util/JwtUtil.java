@@ -10,10 +10,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import online.alphateam.api.server.bean.bo.JwtBO;
 import online.alphateam.api.server.bean.po.JwtHeader;
 import online.alphateam.api.server.bean.po.JwtPayload;
+import online.alphateam.api.server.bean.po.SysUser;
 
 
 public class JwtUtil {
 	public static final String SEPARATOR=".";
+	public static final String SECRET="PC2021";
 	
 	/**
 	 * 生成token
@@ -47,6 +49,21 @@ public class JwtUtil {
 		String signature=md5(herderCode+SEPARATOR+payloadCode+SEPARATOR+secret);		
 		String token=herderCode+SEPARATOR+payloadCode+SEPARATOR+signature;		
 		return token;		
+	}
+	
+	public static String createToken(SysUser user) {
+		String sub=XUtil.toJSON(user);
+		JwtHeader header=new JwtHeader();	
+		header.setTyp("JWT");
+		header.setAlg("MD5");
+		JwtPayload payload=new JwtPayload();
+		payload.setIss("http://www.alphateam.online");
+		payload.setSub(sub);
+		Long iat=System.currentTimeMillis();
+    	Long exp=iat+7*24*60*60*1000l; 
+		payload.setIat(iat);
+		payload.setExp(exp);				
+		return createToken(header, payload, SECRET);		
 	}
 	
 	/**
