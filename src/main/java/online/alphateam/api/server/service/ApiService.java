@@ -11,7 +11,7 @@ import online.alphateam.api.server.util.Pager;
  * www.alphateam.online
  * @Description 
  * @date 2021-08-08 
- * @author 梁文正 liangzongc@gmail.com
+ * @author Michael liangzongc@gmail.com
  */
 public interface ApiService {
 	/**
@@ -21,7 +21,7 @@ public interface ApiService {
 	 * @param api
 	 * @return
 	 * @date 2021-08-09 
-	 * @author 梁文正 liangzongc@gmail.com
+	 * @author Michael liangzongc@gmail.com
 	 */
 	List<Map<String,Object>> list(HttpServletRequest request,String module,String api);
 	/**
@@ -31,7 +31,7 @@ public interface ApiService {
 	 * @param api
 	 * @return
 	 * @date 2021-08-09 
-	 * @author 梁文正 liangzongc@gmail.com
+	 * @author Michael liangzongc@gmail.com
 	 */
 	Pager<Map<String, Object>> pager(HttpServletRequest request, String module, String api);
 }

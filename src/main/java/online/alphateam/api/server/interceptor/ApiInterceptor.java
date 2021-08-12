@@ -14,7 +14,7 @@ import online.alphateam.api.server.util.JwtUtil;
  * www.alphateam.online
  * @Description API拦截器
  * @date 2021-08-07 
- * @author 梁文正 liangzongc@gmail.com
+ * @author Michael liangzongc@gmail.com
  */
 @Component
 public class ApiInterceptor implements HandlerInterceptor {
@@ -57,7 +57,7 @@ public class ApiInterceptor implements HandlerInterceptor {
 	 * @param token
 	 * @return 校验请求是否合法
 	 * @date 2021-08-07 
-	 * @author 梁文正 liangzongc@gmail.com
+	 * @author Michael liangzongc@gmail.com
 	 */
 	private boolean authentication(String token) {		
 		if( JwtUtil.authentication(token, "PC2021") ) {//如果token合法则返回true

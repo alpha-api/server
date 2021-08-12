@@ -22,7 +22,7 @@ public class JwtUtil {
 	 * @param secret
 	 * @return
 	 * @date 2021-08-08 
-	 * @author 梁文正 liangzongc@gmail.com
+	 * @author Michael liangzongc@gmail.com
 	 */
 	public static String createToken(String header,String payload,String secret) {
 		header=Base64.encodeBase64URLSafeString(header.getBytes());
@@ -39,7 +39,7 @@ public class JwtUtil {
 	 * @param secret
 	 * @return
 	 * @date 2021-08-08 
-	 * @author 梁文正 liangzongc@gmail.com
+	 * @author Michael liangzongc@gmail.com
 	 */
 	public static String createToken(JwtHeader header,JwtPayload payload,String secret) {
 		String herderCode= Base64.encodeBase64URLSafeString( XUtil.toJSON(header).getBytes() );
@@ -55,7 +55,7 @@ public class JwtUtil {
 	 * @param secret
 	 * @return
 	 * @date 2021-08-07 
-	 * @author 梁文正 liangzongc@gmail.com
+	 * @author Michael liangzongc@gmail.com
 	 */
 	public static boolean authentication(String token , String secret){
 		try {

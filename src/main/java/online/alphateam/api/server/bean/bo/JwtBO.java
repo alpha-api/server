@@ -7,7 +7,7 @@ import online.alphateam.api.server.bean.po.JwtPayload;
  * www.alphateam.online
  * @Description 
  * @date 2021-08-08 
- * @author 梁文正 liangzongc@gmail.com
+ * @author Michael liangzongc@gmail.com
  */
 public class JwtBO {
 	private JwtHeader header;

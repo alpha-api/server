@@ -20,7 +20,7 @@ import online.alphateam.api.server.exception.ApiException;
  * www.alphateam.online
  * @Description 
  * @date 2021-08-08 
- * @author 梁文正 liangzongc@gmail.com
+ * @author Michael liangzongc@gmail.com
  */
 @Component
 public class DaoUtil {
@@ -32,7 +32,7 @@ public class DaoUtil {
 	 * @param datasourceId
 	 * @return
 	 * @date 2021-08-08 
-	 * @author 梁文正 liangzongc@gmail.com
+	 * @author Michael liangzongc@gmail.com
 	 */
 	public ApiDaoImpl get(String datasourceId) {		
 		ApiDaoImpl dao=daoContext.get(datasourceId);

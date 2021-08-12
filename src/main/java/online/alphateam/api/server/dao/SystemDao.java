@@ -9,7 +9,7 @@ import java.util.Map;
  * www.alphateam.online
  * @Description 
  * @date 2021-08-08 
- * @author 梁文正 liangzongc@gmail.com
+ * @author Michael liangzongc@gmail.com
  */
 public interface SystemDao {
 	/**
@@ -17,7 +17,7 @@ public interface SystemDao {
 	 * @param id
 	 * @return
 	 * @date 2021-08-08 
-	 * @author 梁文正 liangzongc@gmail.com
+	 * @author Michael liangzongc@gmail.com
 	 */
 	public Map<String,Object> getDatasource(String id);
 

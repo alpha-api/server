@@ -11,7 +11,7 @@ import online.alphateam.api.server.util.Pager;
  * www.alphateam.online
  * @Description 
  * @date 2021-08-08 
- * @author 梁文正 liangzongc@gmail.com
+ * @author Michael liangzongc@gmail.com
  */
 public abstract class DaoFactory {
 	private JdbcTemplate jdbcTemplate;	
@@ -27,7 +27,7 @@ public abstract class DaoFactory {
 	 * 
 	 * @return
 	 * @date 2021-08-07 
-	 * @author 梁文正 liangzongc@gmail.com
+	 * @author Michael liangzongc@gmail.com
 	 */
 	private String getDbType() {
 		if(dbType == null) {					
@@ -48,7 +48,7 @@ public abstract class DaoFactory {
 	 * 
 	 * @param jdbcTemplate
 	 * @date 2021-08-07 
-	 * @author 梁文正 liangzongc@gmail.com
+	 * @author Michael liangzongc@gmail.com
 	 */
 	abstract void initFactory(JdbcTemplate jdbcTemplate);
 	
@@ -60,7 +60,7 @@ public abstract class DaoFactory {
 	 * @param args
 	 * @return
 	 * @date 2021-08-07 
-	 * @author 梁文正 liangzongc@gmail.com
+	 * @author Michael liangzongc@gmail.com
 	 */
 	public Pager<Map<String,Object>> queryForPager(String sql,Integer pageNo,Integer pageSize,Object... args) {
 		Pager<Map<String,Object>> pager=null;		
