@@ -1,4 +1,4 @@
-package online.alphateam.api.server.param;
+package online.alphateam.api.server.bean.param;
 
 public class LoginParam {
 

@@ -1,16 +1,16 @@
 package online.alphateam.api.server.service;
 
-import online.alphateam.api.server.bean.po.SysUser;
-import online.alphateam.api.server.exception.ParamException;
-import online.alphateam.api.server.exception.UserNotFoundException;
-import online.alphateam.api.server.param.LoginParam;
-import online.alphateam.api.server.util.JwtUtil;
-import online.alphateam.api.server.util.Result;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import online.alphateam.api.server.bean.param.LoginParam;
+import online.alphateam.api.server.bean.po.SysUser;
 import online.alphateam.api.server.dao.SystemDao;
+import online.alphateam.api.server.exception.ParamException;
+import online.alphateam.api.server.exception.UserNotFoundException;
+import online.alphateam.api.server.util.JwtUtil;
+import online.alphateam.api.server.util.Result;
 
 @Service
 public class SystemServiceImpl implements SystemService {
