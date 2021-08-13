@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class SystemController {
 	private SystemService systemService;
 	@ResponseBody
 	@PostMapping("/login")
-	public Result<String> login(@RequestBody LoginParam loginParam){
+	public Result<String> login(@RequestBody @Validated LoginParam loginParam){
 		Result<String> result=new Result<String>();
 		String token=systemService.login(loginParam);
 		result.success("登陆成功", token);		
