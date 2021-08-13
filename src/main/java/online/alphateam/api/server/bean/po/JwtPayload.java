@@ -1,10 +1,17 @@
 package online.alphateam.api.server.bean.po;
 
 public class JwtPayload {
+	private String typ;
 	private String iss;
 	private String sub;
 	private Long iat;
 	private Long exp;
+	public String getTyp() {
+		return typ;
+	}
+	public void setTyp(String typ) {
+		this.typ = typ;
+	}
 	public String getIss() {
 		return iss;
 	}

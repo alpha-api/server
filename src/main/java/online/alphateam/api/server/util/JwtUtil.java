@@ -57,6 +57,7 @@ public class JwtUtil {
 		header.setTyp("JWT");
 		header.setAlg("MD5");
 		JwtPayload payload=new JwtPayload();
+		payload.setTyp("login");
 		payload.setIss("http://www.alphateam.online");
 		payload.setSub(sub);
 		Long iat=System.currentTimeMillis();
