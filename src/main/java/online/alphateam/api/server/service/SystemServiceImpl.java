@@ -30,7 +30,8 @@ public class SystemServiceImpl implements SystemService {
 			throw new ParamException("密码错误");
 		}
 
-		String token = "jwt_token";
+		user.setPassword(null);
+		String token = JwtUtil.createToken(user);
 		result.success("登陆成功", token);
 		return result;
 	}
