@@ -11,5 +11,5 @@ import online.alphateam.api.server.util.Result;
  * @author Michael liangzongc@gmail.com
  */
 public interface SystemService {
-	Result<String> login(LoginParam loginParam);
+	String login(LoginParam loginParam);
 }

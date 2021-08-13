@@ -23,6 +23,9 @@ public class SystemController {
 	@ResponseBody
 	@PostMapping("/login")
 	public Result<String> login(@RequestBody LoginParam loginParam){
-		return systemService.login(loginParam);
+		Result<String> result=new Result<String>();
+		String token=systemService.login(loginParam);
+		result.success("登陆成功", token);		
+		return result;
 	}
 }

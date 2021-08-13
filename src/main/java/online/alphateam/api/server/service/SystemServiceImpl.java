@@ -18,9 +18,7 @@ public class SystemServiceImpl implements SystemService {
 	private SystemDao systemDao;
 
 	@Override
-	public Result<String> login(LoginParam loginParam) {
-		Result<String> result=new Result<String>();
-
+	public String login(LoginParam loginParam) {
 		SysUser user = systemDao.queryUserByCode(loginParam.getCode());
 		if (user == null) {
 			throw new UserNotFoundException("没有找到用户");
@@ -29,11 +27,9 @@ public class SystemServiceImpl implements SystemService {
 		if (!StringUtils.equals(password, user.getPassword())) {
 			throw new ParamException("密码错误");
 		}
-
 		user.setPassword(null);
-		String token = JwtUtil.createToken(user);
-		result.success("登陆成功", token);
-		return result;
+		String token = JwtUtil.createToken(user);		
+		return token;
 	}
 
 }
