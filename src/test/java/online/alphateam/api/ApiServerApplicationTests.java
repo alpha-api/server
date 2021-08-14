@@ -11,14 +11,21 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import online.alphateam.api.server.bean.bo.AlphaApiBO;
 import online.alphateam.api.server.bean.bo.JwtBO;
 import online.alphateam.api.server.bean.po.JwtHeader;
 import online.alphateam.api.server.bean.po.JwtPayload;
+import online.alphateam.api.server.bean.po.SysApiAlpha;
+import online.alphateam.api.server.bean.po.SysModule;
+import online.alphateam.api.server.cache.CachePool;
+import online.alphateam.api.server.dao.SystemDao;
+import online.alphateam.api.server.util.DaoUtil;
 import online.alphateam.api.server.util.JwtUtil;
 import online.alphateam.api.server.util.SqlParser;
 
@@ -26,6 +33,10 @@ import online.alphateam.api.server.util.SqlParser;
 
 @SpringBootTest
 class ApiServerApplicationTests {
+	@Autowired
+	SystemDao systemDao;
+	@Autowired
+	DaoUtil daoUtil;
 
     @Test
     void token() {    	
@@ -182,5 +193,33 @@ class ApiServerApplicationTests {
     	
     	System.out.println(JwtUtil.md5("888888"));    	
     }
+    @Test
+    public void systemDao() {    	
+      
+    	List<SysApiAlpha> list=systemDao.listSysApiAlpha(210001);
+    	System.out.println(list);
+    	
+    }
+    @Test
+    public void daoUtil() {
+    	// select * from cinema_file where cinema_name like {%name%}  
+    	// select * from cinema_file where cinema_name like #{%name%}
+    	daoUtil.get(1+"");
+    	
+    }
 
+    
+    @Test
+    public void cachePool() {
+    	JwtHeader header=new JwtHeader();
+    	
+    	header.setAlg("9527");
+    	
+    	CachePool.put("abc", header);
+    	
+    	JwtHeader obj=CachePool.get("abc",JwtHeader.class);
+    	
+    	System.out.println(obj);
+    	
+    }
 }

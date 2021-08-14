@@ -33,5 +33,5 @@ public interface ApiService {
 	 * @date 2021-08-09 
 	 * @author Michael liangzongc@gmail.com
 	 */
-	Pager<Map<String, Object>> pager(HttpServletRequest request, String module, String api);
+	Pager<Map<String, Object>> pager(HttpServletRequest request, String module, String api,Integer pageNo,Integer pageSize);
 }

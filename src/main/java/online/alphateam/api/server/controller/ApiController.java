@@ -35,13 +35,14 @@ public class ApiController {
 	public Result<Object> get(HttpServletRequest request,HttpServletResponse response,@PathVariable String module,@PathVariable String api){
 		Result<Object> result=new Result<Object>();		
 		String pageNo=request.getParameter("pageNo");	
+		String pageSize=request.getParameter("pageSize");	
 		//判断是否需要进行分页查询
 		if( pageNo == null || "".equals(pageNo) ) {
 			List<Map<String,Object>> list=apiService.list(request, module, api);	
 			result.setData(list);
 		}else {
 			//分页查询
-			Pager<Map<String, Object>> pager=apiService.pager(request, module, api);
+			Pager<Map<String, Object>> pager=apiService.pager(request, module, api,Integer.parseInt(pageNo),Integer.parseInt(pageSize));
 			result.setData(pager);
 		}
 		result.success("查询成功");		

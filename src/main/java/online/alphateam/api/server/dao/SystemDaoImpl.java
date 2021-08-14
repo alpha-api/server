@@ -1,7 +1,11 @@
 package online.alphateam.api.server.dao;
 
+import java.util.List;
 import java.util.Map;
 
+import online.alphateam.api.server.bean.po.SysApi;
+import online.alphateam.api.server.bean.po.SysApiAlpha;
+import online.alphateam.api.server.bean.po.SysModule;
 import online.alphateam.api.server.bean.po.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,26 +20,79 @@ public class SystemDaoImpl extends DaoFactory implements SystemDao {
 	@Override
 	public Map<String, Object> getDatasource(String id) {
 		StringBuffer sql=new StringBuffer();
-		sql.append(" select * from sys_datasource where id = ? ");
-		return super.getJdbcTemplate().queryForMap(sql.toString(), id);
+		sql.append(" select * from sys_datasource where id = ? and is_delete = ? ");
+		return super.getJdbcTemplate().queryForMap(sql.toString(), id,0);
 	}
 
 	@Override
 	public SysUser queryUserByCode(String code) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" select id, code, name, password, type from sys_user where is_delete = 0 and code = ? ");
-		try {
-			return super.getJdbcTemplate().queryForObject(sql.toString(), (rs, index) -> {
-				SysUser user = new SysUser();
-				user.setId(rs.getInt("id"));
-				user.setName(rs.getString("name"));
-				user.setCode(rs.getString("code"));
-				user.setPassword(rs.getString("password"));
-				user.setType(rs.getInt("type"));
-				return user;
-			}, code);
-		} catch (Exception e) {
-			return null;
-		}
+		sql.append(" select id, code, name, password, type from sys_user where is_delete = 0 and code = ? ");		
+		return super.getJdbcTemplate().queryForObject(sql.toString(), (rs, index) -> {
+			SysUser user = new SysUser();
+			user.setId(rs.getInt("id"));
+			user.setName(rs.getString("name"));
+			user.setCode(rs.getString("code"));
+			user.setPassword(rs.getString("password"));
+			user.setType(rs.getInt("type"));
+			return user;
+		}, code);		
+	}
+	@Override
+	public SysModule getSysModule(String code) {
+		StringBuffer sql=new StringBuffer();
+		sql.append(" select * from sys_module where code = ? and is_delete = ? ");
+		return super.getJdbcTemplate().queryForObject(sql.toString(), (rs, index) -> {
+			SysModule module = new SysModule();
+			module.setId(rs.getInt("id"));			
+			module.setCode(rs.getString("code"));
+			module.setName(rs.getString("name"));
+			module.setRemark(rs.getString("remark"));
+			module.setIsUse(rs.getInt("is_use"));			
+			module.setCreateUserId( rs.getInt("create_user_id") );
+			module.setCreateTime(rs.getTimestamp("create_time"));  
+			module.setUpdateUserId( rs.getInt("update_user_id") );
+			module.setUpdateTime(rs.getTimestamp("update_time"));  
+			return module;
+		}, code,0);
+	}
+	@Override
+	public SysApi getSysApi(Integer moduleId,String apiCode) {
+		StringBuffer sql=new StringBuffer();
+		sql.append(" select * from sys_api where sys_module_id = ? and code = ? and is_delete = ? ");
+		return super.getJdbcTemplate().queryForObject(sql.toString(), (rs, index) -> {
+			SysApi api = new SysApi();
+			api.setId(rs.getInt("id"));			
+			api.setCode(rs.getString("code"));
+			api.setName(rs.getString("name"));
+			api.setType(rs.getInt("type"));
+			api.setRemark(rs.getString("remark"));			
+			api.setSysModuleId(rs.getInt("sys_module_id"));
+			api.setSysDatasourceId(rs.getInt("sys_datasource_id"));				
+			api.setCreateUserId( rs.getInt("create_user_id") );
+			api.setCreateTime(rs.getTimestamp("create_time"));  
+			api.setUpdateUserId( rs.getInt("update_user_id") );
+			api.setUpdateTime(rs.getTimestamp("update_time"));  
+			api.setIsDelete(rs.getInt("is_delete"));
+			return api;
+		},moduleId, apiCode,0);
+	}
+	@Override
+	public SysApiAlpha getSysApiAlpha(Integer apiId, String requestMethod) {
+		StringBuffer sql=new StringBuffer();
+		sql.append(" select * from sys_api_alpha where sys_api_id = ? and request_method = ? and is_delete = ? ");
+		return super.getJdbcTemplate().queryForObject(sql.toString(), (rs, index) -> {
+			SysApiAlpha alpha = new SysApiAlpha();
+			alpha.setId(rs.getInt("id"));			
+			alpha.setRequestMethod(rs.getString("request_method"));
+			alpha.setSql(rs.getString("sql"));
+			alpha.setSysApiId(rs.getInt("sys_api_id"));
+			alpha.setIsDelete(rs.getInt("is_delete"));
+			return alpha;
+		},apiId, requestMethod,0);
+	}
+	@Override
+	public List<SysApiAlpha> listSysApiAlpha(Integer apiId) {
+		return null;		
 	}
 }

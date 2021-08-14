@@ -1,6 +1,6 @@
 package online.alphateam.api.server.bean.po;
 
-public class SysUser {
+public class SysUser extends SysBasic {
 
     private Integer id;
 

@@ -1,7 +1,11 @@
 package online.alphateam.api.server.dao;
 
+import java.util.List;
 import java.util.Map;
 
+import online.alphateam.api.server.bean.po.SysApi;
+import online.alphateam.api.server.bean.po.SysApiAlpha;
+import online.alphateam.api.server.bean.po.SysModule;
 import online.alphateam.api.server.bean.po.SysUser;
 /**
  * 系统模块的dao
@@ -28,5 +32,26 @@ public interface SystemDao {
 	 * @author krypton lqbnet@yeah.net
 	 */
 	SysUser queryUserByCode(String code);
+	/**
+	 * 
+	 * @param code
+	 * @return
+	 * @date 2021-08-13 
+	 * @author Michael liangzongc@gmail.com
+	 */
+	SysModule getSysModule(String code);
+	/**
+	 * 
+	 * @param moduleId
+	 * @param apiCode
+	 * @return
+	 * @date 2021-08-13 
+	 * @author Michael liangzongc@gmail.com
+	 */
+	SysApi getSysApi(Integer moduleId,String apiCode);
+	
+	SysApiAlpha getSysApiAlpha(Integer apiId,String requestMethod);
+	
+	List<SysApiAlpha> listSysApiAlpha(Integer apiId);
 
 }
