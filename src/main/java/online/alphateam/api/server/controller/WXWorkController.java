@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 /**
  * 企业微信单点登陆
@@ -34,6 +35,7 @@ public class WXWorkController {
 	@Value("${wxwork.getuserinfoUri}")
 	private String getuserinfoUri;	
 	private RestTemplate restTemplate=new RestTemplate();
+	@ResponseBody
 	@RequestMapping("/index")
 	public String index(HttpServletRequest request,HttpServletResponse response ) throws IOException {	
 		Object userCode=request.getSession().getAttribute("userCode");	
@@ -41,17 +43,17 @@ public class WXWorkController {
 			String url=authorizeUri+"?appid="+corpid+"&redirect_uri="+redirectUri+"&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
 			response.sendRedirect(url);			
 			return null;
-		}
-		return "/index.html";
+		}		
+		return "hello world "+userCode;
 	}
-	
+	@ResponseBody
 	@RequestMapping("/sso")
 	public String sso(HttpServletRequest request,HttpServletResponse response ) {	
 		String code=request.getParameter("code");		
 		String accessToken=getAccessToken();		
 		String userCode=getUserCode(code, accessToken);
-		request.getSession().setAttribute("userCode", userCode);			
-		return "/index.html";
+		request.getSession().setAttribute("userCode", userCode);		
+		return "hello world "+userCode;
 	}
 	
 	private String getAccessToken() {
@@ -64,7 +66,7 @@ public class WXWorkController {
 	private String getUserCode(String code,String accessToken) {
 		String url=getuserinfoUri+"?code="+code+"&access_token="+accessToken;
 		Map<String,String> result=restTemplate.getForObject(url, HashMap.class);
-		String userId=result.get("UserId");		
-		return userId;		
+		//String userId=result.get("UserId");		
+		return "\n"+result.toString();		
 	}
 }
