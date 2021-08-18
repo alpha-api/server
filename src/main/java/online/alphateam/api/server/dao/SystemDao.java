@@ -2,7 +2,7 @@ package online.alphateam.api.server.dao;
 
 import java.util.List;
 import java.util.Map;
-
+import online.alphateam.api.server.bean.param.ModuleParam;
 import online.alphateam.api.server.bean.po.SysApi;
 import online.alphateam.api.server.bean.po.SysApiAlpha;
 import online.alphateam.api.server.bean.po.SysModule;
@@ -54,4 +54,56 @@ public interface SystemDao {
 	
 	List<SysApiAlpha> listSysApiAlpha(Integer apiId);
 
+	/**
+	 * 根据模块编号统计数量
+	 * @param code
+	 * @param id 当传入id不为null时，排除这个id的数据
+	 * @return
+	 * @date 2021-08-17
+	 * @author krypton lqbnet@yeah.net
+	 */
+	int countSysModuleByCode(String code, Integer id);
+
+	/**
+	 * 保存模块信息
+	 * @param moduleParam
+	 * @param user
+	 * @return
+	 * @date 2021-08-17
+	 * @author krypton lqbnet@yeah.net
+	 */
+	int saveSysModule(ModuleParam moduleParam, SysUser user);
+
+	/**
+	 * 更新模块信息
+	 * @param moduleParam
+	 * @param user
+	 * @return
+	 * @date 2021-08-17
+	 * @author krypton lqbnet@yeah.net
+	 */
+	int updateSysModule(ModuleParam moduleParam, SysUser user);
+
+	/**
+	 * 删除模块
+	 * @param moduleId
+	 * @param user
+	 * @return
+	 * @date 2021-08-17
+	 * @author kryton lqbnet@yeah.net
+	 */
+	int deleteSysModule(Integer moduleId, SysUser user);
+
+	/**
+	 * 查询所有的模块
+	 * @return
+	 */
+	List<SysModule> queryAllSysModule();
+
+	/**
+	 * 根据id查询模块
+	 * @param moduleId
+	 * @return
+	 */
+    SysModule queryModuleById(Integer moduleId);
 }

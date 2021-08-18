@@ -62,7 +62,7 @@ public class Result<T> {
 	public void success(){
 		this.status=SUCCESS;
 	}	
-	public void success(String msg){
+	public void successMsg(String msg){
 		this.status=SUCCESS;
 		this.msg=msg;
 	}

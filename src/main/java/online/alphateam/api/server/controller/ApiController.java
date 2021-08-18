@@ -45,7 +45,7 @@ public class ApiController {
 			Pager<Map<String, Object>> pager=apiService.pager(request, module, api,Integer.parseInt(pageNo),Integer.parseInt(pageSize));
 			result.setData(pager);
 		}
-		result.success("查询成功");		
+		result.successMsg("查询成功");
 		return result;		
 	}
 	

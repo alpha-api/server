@@ -1,13 +1,16 @@
 package online.alphateam.api.server.dao;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
+import online.alphateam.api.server.bean.param.ModuleParam;
 import online.alphateam.api.server.bean.po.SysApi;
 import online.alphateam.api.server.bean.po.SysApiAlpha;
 import online.alphateam.api.server.bean.po.SysModule;
 import online.alphateam.api.server.bean.po.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 @Repository
@@ -27,7 +30,7 @@ public class SystemDaoImpl extends DaoFactory implements SystemDao {
 	@Override
 	public SysUser queryUserByCode(String code) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" select id, code, name, password, type from sys_user where is_delete = 0 and code = ? ");		
+		sql.append(" select id, code, name, password, type from sys_user where is_delete = 0 and code = ? ");
 		return super.getJdbcTemplate().queryForObject(sql.toString(), (rs, index) -> {
 			SysUser user = new SysUser();
 			user.setId(rs.getInt("id"));
@@ -36,7 +39,7 @@ public class SystemDaoImpl extends DaoFactory implements SystemDao {
 			user.setPassword(rs.getString("password"));
 			user.setType(rs.getInt("type"));
 			return user;
-		}, code);		
+		}, code);
 	}
 	@Override
 	public SysModule getSysModule(String code) {
@@ -94,5 +97,56 @@ public class SystemDaoImpl extends DaoFactory implements SystemDao {
 	@Override
 	public List<SysApiAlpha> listSysApiAlpha(Integer apiId) {
 		return null;		
+	}
+
+	@Override
+	public int countSysModuleByCode(String code, Integer id) {
+		List<Object> params = new ArrayList<>();
+		StringBuffer sql = new StringBuffer();
+		sql.append(" select count(*) from sys_module where code = ? and is_delete = 0 ");
+		params.add(code);
+		if (id != null) {
+			sql.append(" and id != ? ");
+			params.add(id);
+		}
+		int count = super.getJdbcTemplate().queryForObject(sql.toString(), Integer.class, params.toArray());
+		return count;
+	}
+
+	@Override
+	public int saveSysModule(ModuleParam moduleParam, SysUser user) {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" insert into sys_module (name, code, remark, is_use, is_delete, create_user_id, create_time) values (?, ?, ?, ?, ?, ?, ?) ");
+		return super.getJdbcTemplate().update(sql.toString(), moduleParam.getName(), moduleParam.getCode(),
+				moduleParam.getRemark(), moduleParam.getIsUse(), 0, user.getId(), new Date());
+	}
+
+	@Override
+	public int updateSysModule(ModuleParam moduleParam, SysUser user) {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" update sys_module set name = ?, code = ?, remark = ?, is_use = ?, update_user_id = ?, update_time = ? where id = ? ");
+		return super.getJdbcTemplate().update(sql.toString(), moduleParam.getName(), moduleParam.getCode(), moduleParam.getRemark(),
+				moduleParam.getIsUse(), user.getId(), new Date(), moduleParam.getId());
+	}
+
+	@Override
+	public int deleteSysModule(Integer moduleId, SysUser user) {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" update sys_module set is_delete = 1, update_user_id, update_time where id = ? and is_delete = 0 ");
+		return super.getJdbcTemplate().update(sql.toString(), user.getId(), new Date(), moduleId);
+	}
+
+	@Override
+	public List<SysModule> queryAllSysModule() {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" select id, code, name, remark, is_use, is_delete, create_user_id, create_time, update_user_id, update_time from sys_module where is_delete = 0 ");
+		return super.getJdbcTemplate().query(sql.toString(), new BeanPropertyRowMapper<>(SysModule.class));
+	}
+
+	@Override
+	public SysModule queryModuleById(Integer moduleId) {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" select id, code, name, remark, is_use, is_delete, create_user_id, create_time, update_user_id, update_time from sys_module where id = ? and is_delete = 0 ");
+		return super.getJdbcTemplate().queryForObject(sql.toString(), new BeanPropertyRowMapper<>(SysModule.class), moduleId);
 	}
 }
