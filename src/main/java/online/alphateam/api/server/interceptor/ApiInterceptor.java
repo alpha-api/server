@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import online.alphateam.api.server.bean.bo.JwtBO;
 import online.alphateam.api.server.util.JwtUtil;
 /**
  * 
@@ -60,10 +61,17 @@ public class ApiInterceptor implements HandlerInterceptor {
 	 * @author Michael liangzongc@gmail.com
 	 */
 	private boolean authentication(String token) {		
-		if( JwtUtil.authentication(token, "PC2021") ) {//如果token合法则返回true
-			return true;			
+		if( !JwtUtil.authentication(token,JwtUtil.SECRET) ) {//如果token合法则返回true
+			return false;			
 		}		
-		return false;		
+		JwtBO bo=JwtUtil.parseToken(token);		
+		if( !"api".equals(bo.getPayload().getTyp()) ) {//判断token的类型
+			return false;			
+		}	
+		if( System.currentTimeMillis() > bo.getPayload().getExp() ) {//判断token是否已过期
+			return false;		
+		}
+		return true;		
 	}
 
 }
