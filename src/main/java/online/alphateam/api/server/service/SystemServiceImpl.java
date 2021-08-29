@@ -1,8 +1,11 @@
 package online.alphateam.api.server.service;
 
 import online.alphateam.api.server.bean.dto.SysApiDTO;
+import online.alphateam.api.server.bean.param.AlphaParam;
 import online.alphateam.api.server.bean.param.ApiParam;
 import online.alphateam.api.server.bean.param.ModuleParam;
+import online.alphateam.api.server.bean.po.SysApiAlpha;
+import online.alphateam.api.server.bean.po.SysDatasource;
 import online.alphateam.api.server.bean.po.SysModule;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,10 @@ import online.alphateam.api.server.exception.ParamException;
 import online.alphateam.api.server.exception.UserNotFoundException;
 import online.alphateam.api.server.util.JwtUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class SystemServiceImpl implements SystemService {
@@ -70,33 +76,90 @@ public class SystemServiceImpl implements SystemService {
 	}
 
 	@Override
-	public void saveSysApi(ApiParam apiParam) {
+	public long saveSysApi(ApiParam apiParam, SysUser user) {
+		// 判断在该模块下是否已经存在接口编号
+		if (checkApiCodeExists(apiParam.getSysModuleId(), apiParam.getCode(), null)) {
+			throw new ParamException("此模块下已经存在该编码");
+		}
+		long id = systemDao.saveSysApi(apiParam, user);
+		return id;
+	}
 
+	private boolean checkApiCodeExists(Integer sysModuleId, String apiCode, Integer apiId) {
+		return systemDao.countSysAipCodeBySysModuleId(sysModuleId, apiCode, apiId) > 0;
 	}
 
 	@Override
-	public void updateSysApi(ApiParam apiParam) {
-
+	public void updateSysApi(ApiParam apiParam, SysUser user) {
+		if (checkApiCodeExists(apiParam.getSysModuleId(), apiParam.getCode(), apiParam.getId())) {
+			throw new ParamException("此模块下已经存在该编码");
+		}
+		systemDao.updateSysApi(apiParam, user);
 	}
 
 	@Override
-	public void deleteSysApi(Integer apiId) {
-
+	public void deleteSysApi(Integer apiId, SysUser user) {
+		systemDao.deleteSysApi(apiId, user);
 	}
 
 	@Override
-	public void deleteSysApiChild(Integer type, Integer childId) {
-
+	public SysApiDTO getSysApi(Integer apiId) {
+		SysApiDTO api = systemDao.querySysApiById(apiId);
+		List<SysApiAlpha> children = systemDao.queryAlphaByApiId(apiId);
+		api.setDetails(children);
+		return  api;
 	}
 
 	@Override
-	public SysApiDTO<?> getSysApi(Integer type, Integer detailId) {
-		return null;
+	public List<SysApiDTO> querySysApi(Integer moduleId, Integer datasourceId) {
+		List<SysApiDTO> apiList = systemDao.querySysApiByModuleIdAndDatasourceId(moduleId, datasourceId);
+		List<Integer> ids = apiList.stream().map(item -> item.getId()).collect(Collectors.toList());
+		List<SysApiAlpha> alphas = systemDao.queryAlphaByApiIds(ids);
+		Map<Integer, List<SysApiAlpha>> alphaGroup = alphas.stream().collect(Collectors.groupingBy(item -> item.getSysApiId()));
+		apiList.forEach(item -> {
+			String url = "/api/v1/alpha/" +  item.getModuleCode() + "/" + item.getCode();
+			item.setUrl(url);
+			Integer id = item.getId();
+			List<SysApiAlpha> children = alphaGroup.get(id);
+			if (children == null) {
+				children = new ArrayList<>();
+			}
+			List<String> requestMethods = children.stream().map(child -> child.getRequestMethod()).collect(Collectors.toList());
+			item.setRequestMethods(requestMethods);
+		});
+		return apiList;
 	}
 
 	@Override
-	public List<SysApiDTO<?>> querySysApi(Integer moduleId, Integer datasourceId) {
-		return null;
+	public List<SysDatasource> queryAllSysDatasource() {
+		List<SysDatasource> datasourceList = systemDao.queryAllSysDatasource();
+		return datasourceList;
+	}
+
+	@Override
+	public long saveSysApiAlpha(AlphaParam param) {
+		if(checkAlphaMethodExists(param.getSysApiId(), param.getRequestMethod(), null)) {
+			throw new ParamException("请求类型已经存在");
+		}
+		long id = systemDao.saveSysApiAlpha(param);
+		return id;
+	}
+
+	@Override
+	public void updateSysApiAlpha(AlphaParam param) {
+		if(checkAlphaMethodExists(param.getSysApiId(), param.getRequestMethod(), param.getId())) {
+			throw new ParamException("请求类型已经存在");
+		}
+		systemDao.updateSysApiAlpha(param);
+	}
+
+	@Override
+	public void deleteSysApiAlpha(Integer alphaId) {
+		systemDao.deleteSysApiAlpha(alphaId);
+	}
+
+	private boolean checkAlphaMethodExists(Integer sysApiId, String requestMethod, Integer alphaId) {
+		return systemDao.countSysApiAlphaRequestMethod(sysApiId, requestMethod, alphaId) > 0;
 	}
 
 }

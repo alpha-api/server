@@ -1,9 +1,11 @@
 package online.alphateam.api.server.service;
 
 import online.alphateam.api.server.bean.dto.SysApiDTO;
+import online.alphateam.api.server.bean.param.AlphaParam;
 import online.alphateam.api.server.bean.param.ApiParam;
 import online.alphateam.api.server.bean.param.LoginParam;
 import online.alphateam.api.server.bean.param.ModuleParam;
+import online.alphateam.api.server.bean.po.SysDatasource;
 import online.alphateam.api.server.bean.po.SysModule;
 import online.alphateam.api.server.bean.po.SysUser;
 import java.util.List;
@@ -28,15 +30,21 @@ public interface SystemService {
 
 	List<SysModule> queryAllSysModule();
 
-    void saveSysApi(ApiParam apiParam);
+    long saveSysApi(ApiParam apiParam, SysUser user);
 
-	void updateSysApi(ApiParam apiParam);
+	void updateSysApi(ApiParam apiParam, SysUser user);
 
-	void deleteSysApi(Integer apiId);
+	void deleteSysApi(Integer apiId, SysUser user);
 
-	void deleteSysApiChild(Integer type, Integer childId);
+	SysApiDTO getSysApi(Integer apiId);
 
-	SysApiDTO<?> getSysApi(Integer type, Integer detailId);
+	List<SysApiDTO> querySysApi(Integer moduleId, Integer datasourceId);
 
-	List<SysApiDTO<?>> querySysApi(Integer moduleId, Integer datasourceId);
+    List<SysDatasource> queryAllSysDatasource();
+
+	long saveSysApiAlpha(AlphaParam param);
+
+	void updateSysApiAlpha(AlphaParam param);
+
+	void deleteSysApiAlpha(Integer alphaId);
 }

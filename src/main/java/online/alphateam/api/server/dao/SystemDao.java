@@ -2,11 +2,13 @@ package online.alphateam.api.server.dao;
 
 import java.util.List;
 import java.util.Map;
+
+import online.alphateam.api.server.bean.dto.SysApiDTO;
+import online.alphateam.api.server.bean.param.AlphaParam;
+import online.alphateam.api.server.bean.param.ApiParam;
 import online.alphateam.api.server.bean.param.ModuleParam;
-import online.alphateam.api.server.bean.po.SysApi;
-import online.alphateam.api.server.bean.po.SysApiAlpha;
-import online.alphateam.api.server.bean.po.SysModule;
-import online.alphateam.api.server.bean.po.SysUser;
+import online.alphateam.api.server.bean.po.*;
+
 /**
  * 系统模块的dao
  * www.alphateam.online
@@ -106,4 +108,96 @@ public interface SystemDao {
 	 * @return
 	 */
     SysModule queryModuleById(Integer moduleId);
+
+	/**
+	 * 查询所有的数据源
+	 * @return
+	 */
+	List<SysDatasource> queryAllSysDatasource();
+
+	/**
+	 * 统计在某个模块下的api code的数量
+	 * @param sysModuleId
+	 * @param apiCode
+	 * @return
+	 */
+	int countSysAipCodeBySysModuleId(Integer sysModuleId, String apiCode, Integer apiId);
+
+	/**
+	 * 保存api
+	 * @param apiParam
+	 * @return
+	 */
+	long saveSysApi(ApiParam apiParam, SysUser user);
+
+	/**
+	 * 更新api
+	 * @param apiParam
+	 */
+	int updateSysApi(ApiParam apiParam, SysUser user);
+
+	/**
+	 * 删除api
+	 * @param apiId
+	 * @param user
+	 * @return
+	 */
+	int deleteSysApi(Integer apiId, SysUser user);
+
+	/**
+	 * 根据moduleId和datasourceId查询api
+	 * @param moduleId
+	 * @param datasourceId
+	 * @return
+	 */
+	List<SysApiDTO> querySysApiByModuleIdAndDatasourceId(Integer moduleId, Integer datasourceId);
+
+	/**
+	 * 根据apiId查询alpha
+	 * @param ids
+	 * @return
+	 */
+	List<SysApiAlpha> queryAlphaByApiIds(List<Integer> ids);
+
+	/**
+	 * 根据id查询api
+	 * @param apiId
+	 * @return
+	 */
+	SysApiDTO querySysApiById(Integer apiId);
+
+	/**
+	 * 根据apiId查询alpha
+	 * @param apiId
+	 * @return
+	 */
+	List<SysApiAlpha> queryAlphaByApiId(Integer apiId);
+
+	/**
+	 * 保存alpha
+	 * @param param
+	 * @return
+	 */
+	long saveSysApiAlpha(AlphaParam param);
+
+	/**
+	 * 更新alpha
+	 * @param param
+	 */
+	void updateSysApiAlpha(AlphaParam param);
+
+	/**
+	 * 删除alpha
+	 * @param alphaId
+	 */
+	void deleteSysApiAlpha(Integer alphaId);
+
+	/**
+	 * 统计请求方法的数量
+	 * @param sysApiId
+	 * @param requestMethod
+	 * @param alphaId
+	 * @return
+	 */
+	int countSysApiAlphaRequestMethod(Integer sysApiId, String requestMethod, Integer alphaId);
 }

@@ -38,8 +38,6 @@ public class ApiParam {
     @NotNull(message = "数据源id不能为空", groups = {SaveGroup.class})
     private Integer sysDatasourceId;
 
-    private AlphaParam alphaParam;
-
     public Integer getId() {
         return id;
     }
@@ -96,11 +94,4 @@ public class ApiParam {
         this.sysDatasourceId = sysDatasourceId;
     }
 
-    public AlphaParam getAlphaParam() {
-        return alphaParam;
-    }
-
-    public void setAlphaParam(AlphaParam alphaParam) {
-        this.alphaParam = alphaParam;
-    }
 }

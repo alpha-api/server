@@ -5,17 +5,24 @@ import javax.validation.constraints.NotNull;
 
 public class AlphaParam {
 
-    @NotNull(message = "明细id不能为空", groups = {ApiParam.UpdateGroup.class})
+    public interface SaveGroup {}
+
+    public interface UpdateGroup extends SaveGroup {}
+
+    @NotNull(message = "明细id不能为空", groups = {UpdateGroup.class})
     private Integer id;
 
-    @NotBlank(message = "请求方法不能为空", groups = {ApiParam.SaveGroup.class})
+    @NotBlank(message = "请求方法不能为空", groups = {SaveGroup.class})
     private String requestMethod;
 
-    @NotBlank(message = "SQL不能为空", groups = {ApiParam.SaveGroup.class})
+    @NotBlank(message = "SQL不能为空", groups = {SaveGroup.class})
     private String sql;
 
-    @NotNull(message = "状态不能为空", groups = {ApiParam.SaveGroup.class})
+    @NotNull(message = "状态不能为空", groups = {SaveGroup.class})
     private Integer isUse;
+
+    @NotNull(message = "api id不能为空", groups = {SaveGroup.class})
+    private Integer sysApiId;
 
     public Integer getId() {
         return id;
@@ -47,5 +54,13 @@ public class AlphaParam {
 
     public void setIsUse(Integer isUse) {
         this.isUse = isUse;
+    }
+
+    public Integer getSysApiId() {
+        return sysApiId;
+    }
+
+    public void setSysApiId(Integer sysApiId) {
+        this.sysApiId = sysApiId;
     }
 }

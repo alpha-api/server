@@ -1,11 +1,16 @@
 package online.alphateam.api.server.dao;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.springframework.jdbc.core.JdbcTemplate;
 import online.alphateam.api.server.util.Pager;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+
 /**
  * dao核心类，提供公共方法
  * www.alphateam.online
@@ -119,7 +124,19 @@ public abstract class DaoFactory {
 		return new Pager<Map<String,Object>>(pageNo, pageSize, total, list);		
 	}
 	
-	
+	public long saveAndReturnKey(String sql, List<Object> params) {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		jdbcTemplate.update(connection -> {
+			PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			int i = 1;
+			for (Object obj : params) {
+				ps.setObject(i, obj);
+				i++;
+			}
+			return ps;
+		}, keyHolder);
+		return keyHolder.getKey().longValue();
+	}
 	
 }
 

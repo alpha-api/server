@@ -2,8 +2,10 @@ package online.alphateam.api.server.controller;
 
 import online.alphateam.api.server.annotation.CurrentUser;
 import online.alphateam.api.server.bean.dto.SysApiDTO;
+import online.alphateam.api.server.bean.param.AlphaParam;
 import online.alphateam.api.server.bean.param.ApiParam;
 import online.alphateam.api.server.bean.param.ModuleParam;
+import online.alphateam.api.server.bean.po.SysDatasource;
 import online.alphateam.api.server.bean.po.SysModule;
 import online.alphateam.api.server.bean.po.SysUser;
 import org.slf4j.Logger;
@@ -29,6 +31,15 @@ public class SystemController {
 		Result<String> result=new Result<String>();
 		String token=systemService.login(loginParam);
 		result.success("登陆成功", token);		
+		return result;
+	}
+
+	@ResponseBody
+	@GetMapping("/datasource")
+	public Result<List<SysDatasource>> queryAllSysDatasource() {
+		Result<List<SysDatasource>> result=new Result<>();
+		List<SysDatasource> datasourceList = systemService.queryAllSysDatasource();
+		result.success(datasourceList);
 		return result;
 	}
 
@@ -81,55 +92,73 @@ public class SystemController {
 
 	@ResponseBody
 	@PostMapping("/api")
-	public Result<String> saveSysApi(@RequestBody @Validated(ApiParam.SaveGroup.class) ApiParam apiParam) {
-		Result<String> result = new Result<>();
-		systemService.saveSysApi(apiParam);
-		result.success("新增成功");
+	public Result<Long> saveSysApi(@RequestBody @Validated(ApiParam.SaveGroup.class) ApiParam apiParam, @CurrentUser SysUser user) {
+		Result<Long> result = new Result<>();
+		long id = systemService.saveSysApi(apiParam, user);
+		result.success("新增成功", id);
 		return result;
 	}
 
 	@ResponseBody
 	@PutMapping("/api")
-	public Result<String> updateSysApi(@RequestBody @Validated(ApiParam.SaveGroup.class) ApiParam apiParam) {
+	public Result<String> updateSysApi(@RequestBody @Validated(ApiParam.SaveGroup.class) ApiParam apiParam, @CurrentUser SysUser user) {
 		Result<String> result = new Result<>();
-		systemService.updateSysApi(apiParam);
+		systemService.updateSysApi(apiParam, user);
 		result.success("更新成功");
 		return result;
 	}
 
 	@ResponseBody
 	@DeleteMapping("/api/{id}")
-	public Result<String> deleteSysApi(@PathVariable("id") Integer apiId) {
+	public Result<String> deleteSysApi(@PathVariable("id") Integer apiId, @CurrentUser SysUser user) {
 		Result<String> result = new Result<>();
-		systemService.deleteSysApi(apiId);
+		systemService.deleteSysApi(apiId, user);
 		result.success("删除成功");
 		return result;
 	}
 
 	@ResponseBody
-	@DeleteMapping("/api/{type}/{id}")
-	public Result<String> deleteSysApiChild(@PathVariable("type") Integer type, @PathVariable("id") Integer childId) {
-		Result<String> result = new Result<>();
-		systemService.deleteSysApiChild(type, childId);
-		result.success("删除成功");
-		return result;
-	}
-
-	@ResponseBody
-	@GetMapping("/api/{type}/{id}")
-	public Result<SysApiDTO<?>> getSysApi(@PathVariable("type") Integer type, @PathVariable("id") Integer detailId) {
+	@GetMapping("/api/{id}")
+	public Result<SysApiDTO<?>> getSysApi(@PathVariable("id") Integer apiId) {
 		Result<SysApiDTO<?>> result = new Result<>();
-		SysApiDTO<?> api = systemService.getSysApi(type, detailId);
+		SysApiDTO<?> api = systemService.getSysApi(apiId);
 		result.success(api);
 		return result;
 	}
 
 	@ResponseBody
 	@GetMapping("/api")
-	public Result<List<SysApiDTO<?>>> querySysApi(@RequestParam Integer moduleId, @RequestParam Integer datasourceId) {
-		Result<List<SysApiDTO<?>>> result = new Result<>();
-		List<SysApiDTO<?>> apis = systemService.querySysApi(moduleId, datasourceId);
+	public Result<List<SysApiDTO>> querySysApi(@RequestParam Integer moduleId, @RequestParam Integer datasourceId) {
+		Result<List<SysApiDTO>> result = new Result<>();
+		List<SysApiDTO> apis = systemService.querySysApi(moduleId, datasourceId);
 		result.success(apis);
+		return result;
+	}
+
+	@ResponseBody
+	@PostMapping("/alpha")
+	public Result<Long> saveAlpha(@RequestBody @Validated(AlphaParam.SaveGroup.class) AlphaParam param) {
+		Result<Long> result = new Result<>();
+		long id = systemService.saveSysApiAlpha(param);
+		result.success(id);
+		return result;
+	}
+
+	@ResponseBody
+	@PutMapping("/alpha")
+	public Result<Long> updateAlpha(@RequestBody @Validated(AlphaParam.UpdateGroup.class) AlphaParam param) {
+		Result<Long> result = new Result<>();
+		systemService.updateSysApiAlpha(param);
+		result.successMsg("更新成功");
+		return result;
+	}
+
+	@ResponseBody
+	@DeleteMapping("/alpha/{id}")
+	public Result<Long> DeleteAlpha(@PathVariable("id") Integer alphaId) {
+		Result<Long> result = new Result<>();
+		systemService.deleteSysApiAlpha(alphaId);
+		result.successMsg("删除成功");
 		return result;
 	}
 }
