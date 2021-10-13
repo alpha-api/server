@@ -16,23 +16,23 @@ public class ApiParam {
     @NotNull(message = "id不能为空", groups = {UpdateGroup.class})
     private Integer id;
 
-    @NotBlank(message = "编号不能为空", groups = {SaveGroup.class})
-    @Length(max = 32, message = "编号长度不能超过32个字条", groups = {SaveGroup.class})
+    @NotBlank(message = "API编号不能为空", groups = {UpdateGroup.class})
+    @Length(max = 32, message = "API编号长度不能超过32个字条", groups = {UpdateGroup.class})
     private String code;
 
-    @NotBlank(message = "名称不能为空", groups = {SaveGroup.class})
-    @Length(max = 16, message = "名称长度不能超过16个字条", groups = {SaveGroup.class})
+    @NotBlank(message = "API名称不能为空", groups = {UpdateGroup.class})
+    @Length(max = 16, message = "API名称长度不能超过16个字条", groups = {UpdateGroup.class})
     private String name;
 
-    @NotNull(message = "类型不能为空", groups = {SaveGroup.class})
-    @Min(value = 1, message = "类型错误", groups = {SaveGroup.class})
-    @Max(value = 3, message = "类型错误", groups = {SaveGroup.class})
+    @NotNull(message = "API类型不能为空", groups = {SaveGroup.class})
+    @Min(value = 1, message = "API类型错误", groups = {SaveGroup.class})
+    @Max(value = 3, message = "API类型错误", groups = {SaveGroup.class})
     private Integer type;
 
-    @Length(max = 128, message = "备注长度不能超过128个字符", groups = {SaveGroup.class})
+    @Length(max = 128, message = "备注长度不能超过128个字符", groups = {UpdateGroup.class})
     private String remark;
 
-    @NotNull(message = "模块id不能为空", groups = {SaveGroup.class})
+    @NotNull(message = "所属模块id不能为空", groups = {SaveGroup.class})
     private Integer sysModuleId;
 
     @NotNull(message = "数据源id不能为空", groups = {SaveGroup.class})

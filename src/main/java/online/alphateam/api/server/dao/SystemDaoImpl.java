@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import online.alphateam.api.server.bean.dto.SysApiDTO;
 import online.alphateam.api.server.bean.param.AlphaParam;
 import online.alphateam.api.server.bean.param.ApiParam;
+import online.alphateam.api.server.bean.param.DatasourceParam;
 import online.alphateam.api.server.bean.param.ModuleParam;
 import online.alphateam.api.server.bean.po.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,7 +134,7 @@ public class SystemDaoImpl extends DaoFactory implements SystemDao {
 	@Override
 	public int deleteSysModule(Integer moduleId, SysUser user) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" update sys_module set is_delete = 1, update_user_id, update_time where id = ? and is_delete = 0 ");
+		sql.append(" update sys_module set is_delete = 1, update_user_id = ?, update_time = ? where id = ? and is_delete = 0 ");
 		return super.getJdbcTemplate().update(sql.toString(), user.getId(), new Date(), moduleId);
 	}
 
@@ -177,12 +178,9 @@ public class SystemDaoImpl extends DaoFactory implements SystemDao {
 	@Override
 	public long saveSysApi(ApiParam apiParam, SysUser user) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" insert into sys_api (code, name, remark, type, sys_module_id, sys_datasource_id, is_delete, create_user_id, create_time) ");
-		sql.append(" values (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+		sql.append(" insert into sys_api (type, sys_module_id, sys_datasource_id, is_delete, create_user_id, create_time) ");
+		sql.append(" values (?, ?, ?, ?, ?, ?) ");
 		List<Object> params = new ArrayList<>();
-		params.add(apiParam.getCode());
-		params.add(apiParam.getName());
-		params.add(apiParam.getRemark());
 		params.add(apiParam.getType());
 		params.add(apiParam.getSysModuleId());
 		params.add(apiParam.getSysDatasourceId());
@@ -234,8 +232,11 @@ public class SystemDaoImpl extends DaoFactory implements SystemDao {
 	@Override
 	public SysApiDTO querySysApiById(Integer apiId) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" select api.id, api.code, api.name, api.remark, api.type, api.sys_module_id sysModuleId, api.sys_datasource_id sysDatasourceId ");
+		sql.append(" select api.id, api.code, api.name, api.remark, api.type, api.sys_module_id sysModuleId, api.sys_datasource_id sysDatasourceId, ");
+		sql.append(" module.name moduleName, module.code moduleCode, datasource.name datasourceName ");
 		sql.append(" from sys_api api ");
+		sql.append(" left join sys_module module on module.id = api.sys_module_id ");
+		sql.append(" left join sys_datasource datasource on datasource.id = api.sys_datasource_id ");
 		sql.append(" where api.is_delete = 0 and api.id = ? ");
 		return super.getJdbcTemplate().queryForObject(sql.toString(), new BeanPropertyRowMapper<>(SysApiDTO.class), apiId);
 	}
@@ -293,5 +294,38 @@ public class SystemDaoImpl extends DaoFactory implements SystemDao {
 			params.add(alphaId);
 		}
 		return super.getJdbcTemplate().queryForObject(sql.toString(), Integer.class, params.toArray());
+	}
+
+	@Override
+	public long saveSysDatasource(DatasourceParam param, SysUser user) {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" insert into sys_datasource (name, driver_class_name, url, user_name, password, remark, create_user_id, create_time, is_delete) ");
+		sql.append(" values (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+		List<Object> params = new ArrayList<>();
+		params.add(param.getName());
+		params.add(param.getDriverClassName());
+		params.add(param.getUrl());
+		params.add(param.getUsername());
+		params.add(param.getPassword());
+		params.add(param.getRemark());
+		params.add(user.getId());
+		params.add(new Date());
+		params.add(0);
+		return super.saveAndReturnKey(sql.toString(), params);
+	}
+
+	@Override
+	public int deleteDatasource(Integer datasourceId, SysUser user) {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" update sys_datasource set is_delete = 1, update_user_id = ?, update_time = ? where id = ? ");
+		return super.getJdbcTemplate().update(sql.toString(), user.getId(), new Date(), datasourceId);
+	}
+
+	@Override
+	public int updateDatasource(DatasourceParam param, SysUser user) {
+		StringBuffer sql = new StringBuffer();
+		sql.append(" update sys_datasource set name = ?, driver_class_name = ?, url = ?, user_name = ?, remark = ?, update_user_id = ?, update_time = ? where id = ? ");
+		return super.getJdbcTemplate().update(sql.toString(), param.getName(), param.getDriverClassName(), param.getUrl(),
+				param.getUsername(), param.getRemark(), user.getId(), new Date(), param.getId());
 	}
 }

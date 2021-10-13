@@ -1,16 +1,13 @@
 package online.alphateam.api.server.service;
 
 import online.alphateam.api.server.bean.dto.SysApiDTO;
-import online.alphateam.api.server.bean.param.AlphaParam;
-import online.alphateam.api.server.bean.param.ApiParam;
-import online.alphateam.api.server.bean.param.ModuleParam;
+import online.alphateam.api.server.bean.param.*;
 import online.alphateam.api.server.bean.po.SysApiAlpha;
 import online.alphateam.api.server.bean.po.SysDatasource;
 import online.alphateam.api.server.bean.po.SysModule;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import online.alphateam.api.server.bean.param.LoginParam;
 import online.alphateam.api.server.bean.po.SysUser;
 import online.alphateam.api.server.dao.SystemDao;
 import online.alphateam.api.server.exception.ParamException;
@@ -77,10 +74,6 @@ public class SystemServiceImpl implements SystemService {
 
 	@Override
 	public long saveSysApi(ApiParam apiParam, SysUser user) {
-		// 判断在该模块下是否已经存在接口编号
-		if (checkApiCodeExists(apiParam.getSysModuleId(), apiParam.getCode(), null)) {
-			throw new ParamException("此模块下已经存在该编码");
-		}
 		long id = systemDao.saveSysApi(apiParam, user);
 		return id;
 	}
@@ -156,6 +149,24 @@ public class SystemServiceImpl implements SystemService {
 	@Override
 	public void deleteSysApiAlpha(Integer alphaId) {
 		systemDao.deleteSysApiAlpha(alphaId);
+	}
+
+	@Override
+	public void saveSysDatasource(DatasourceParam param, SysUser user) {
+		if (StringUtils.isBlank(param.getPassword())) {
+			throw new ParamException("用户密码不能为空");
+		}
+		systemDao.saveSysDatasource(param, user);
+	}
+
+	@Override
+	public void updateSysDatasource(DatasourceParam param, SysUser user) {
+		systemDao.updateDatasource(param, user);
+	}
+
+	@Override
+	public void deleteSysDatasource(Integer datasourceId, SysUser user) {
+		systemDao.deleteDatasource(datasourceId, user);
 	}
 
 	private boolean checkAlphaMethodExists(Integer sysApiId, String requestMethod, Integer alphaId) {

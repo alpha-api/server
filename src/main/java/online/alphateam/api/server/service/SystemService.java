@@ -1,10 +1,7 @@
 package online.alphateam.api.server.service;
 
 import online.alphateam.api.server.bean.dto.SysApiDTO;
-import online.alphateam.api.server.bean.param.AlphaParam;
-import online.alphateam.api.server.bean.param.ApiParam;
-import online.alphateam.api.server.bean.param.LoginParam;
-import online.alphateam.api.server.bean.param.ModuleParam;
+import online.alphateam.api.server.bean.param.*;
 import online.alphateam.api.server.bean.po.SysDatasource;
 import online.alphateam.api.server.bean.po.SysModule;
 import online.alphateam.api.server.bean.po.SysUser;
@@ -47,4 +44,10 @@ public interface SystemService {
 	void updateSysApiAlpha(AlphaParam param);
 
 	void deleteSysApiAlpha(Integer alphaId);
+
+	void saveSysDatasource(DatasourceParam param, SysUser user);
+
+	void updateSysDatasource(DatasourceParam param, SysUser user);
+
+	void deleteSysDatasource(Integer datasourceId, SysUser user);
 }

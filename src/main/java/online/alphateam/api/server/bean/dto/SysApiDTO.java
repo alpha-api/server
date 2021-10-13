@@ -15,6 +15,8 @@ public class SysApiDTO <T> extends SysApi {
 
     private String url;
 
+    private String datasourceName;
+
     public String getModuleName() {
         return moduleName;
     }
@@ -53,5 +55,13 @@ public class SysApiDTO <T> extends SysApi {
 
     public void setDetails(List<T> details) {
         this.details = details;
+    }
+
+    public String getDatasourceName() {
+        return datasourceName;
+    }
+
+    public void setDatasourceName(String datasourceName) {
+        this.datasourceName = datasourceName;
     }
 }

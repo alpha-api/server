@@ -2,9 +2,7 @@ package online.alphateam.api.server.controller;
 
 import online.alphateam.api.server.annotation.CurrentUser;
 import online.alphateam.api.server.bean.dto.SysApiDTO;
-import online.alphateam.api.server.bean.param.AlphaParam;
-import online.alphateam.api.server.bean.param.ApiParam;
-import online.alphateam.api.server.bean.param.ModuleParam;
+import online.alphateam.api.server.bean.param.*;
 import online.alphateam.api.server.bean.po.SysDatasource;
 import online.alphateam.api.server.bean.po.SysModule;
 import online.alphateam.api.server.bean.po.SysUser;
@@ -14,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import online.alphateam.api.server.bean.param.LoginParam;
 import online.alphateam.api.server.service.SystemService;
 import online.alphateam.api.server.util.Result;
 import java.util.List;
@@ -40,6 +37,35 @@ public class SystemController {
 		Result<List<SysDatasource>> result=new Result<>();
 		List<SysDatasource> datasourceList = systemService.queryAllSysDatasource();
 		result.success(datasourceList);
+		return result;
+	}
+
+	@ResponseBody
+	@PostMapping("/datasource")
+	public Result<String> saveDatasource(@RequestBody @Validated(DatasourceParam.SaveGroup.class) DatasourceParam param,
+										 @CurrentUser SysUser user) {
+		Result<String> result = new Result<>();
+		systemService.saveSysDatasource(param, user);
+		result.successMsg("新增成功");
+		return result;
+	}
+
+	@ResponseBody
+	@PutMapping("/datasource")
+	public Result<String> updateDatasource(@RequestBody @Validated(DatasourceParam.UpdateGroup.class) DatasourceParam param,
+										 @CurrentUser SysUser user) {
+		Result<String> result = new Result<>();
+		systemService.updateSysDatasource(param, user);
+		result.successMsg("更新成功");
+		return result;
+	}
+
+	@ResponseBody
+	@DeleteMapping("/datasource/{id}")
+	public Result<String> deleteDatasource(@PathVariable("id") Integer datasourceId, @CurrentUser SysUser user) {
+		Result<String> result = new Result<>();
+		systemService.deleteSysDatasource(datasourceId, user);
+		result.successMsg("删除成功");
 		return result;
 	}
 

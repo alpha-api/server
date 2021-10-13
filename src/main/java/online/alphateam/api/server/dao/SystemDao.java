@@ -6,6 +6,7 @@ import java.util.Map;
 import online.alphateam.api.server.bean.dto.SysApiDTO;
 import online.alphateam.api.server.bean.param.AlphaParam;
 import online.alphateam.api.server.bean.param.ApiParam;
+import online.alphateam.api.server.bean.param.DatasourceParam;
 import online.alphateam.api.server.bean.param.ModuleParam;
 import online.alphateam.api.server.bean.po.*;
 
@@ -200,4 +201,25 @@ public interface SystemDao {
 	 * @return
 	 */
 	int countSysApiAlphaRequestMethod(Integer sysApiId, String requestMethod, Integer alphaId);
+
+	/**
+	 * 保存数据源
+	 * @param param
+	 * @param user
+	 */
+    long saveSysDatasource(DatasourceParam param, SysUser user);
+
+	/**
+	 * 删除数据源
+	 * @param datasourceId
+	 * @param user
+	 */
+	int deleteDatasource(Integer datasourceId, SysUser user);
+
+	/**
+	 * 更新数据源
+	 * @param param
+	 * @param user
+	 */
+	int updateDatasource(DatasourceParam param, SysUser user);
 }
