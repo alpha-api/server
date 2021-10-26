@@ -268,8 +268,8 @@ public class SystemDaoImpl extends DaoFactory implements SystemDao {
 	@Override
 	public void updateSysApiAlpha(AlphaParam param) {
 		StringBuffer sql = new StringBuffer();
-		sql.append(" update sys_api_alpha set `sql` = ?, is_use = ? where id = ? ");
-		super.getJdbcTemplate().update(sql.toString(), param.getSql(), param.getIsUse(), param.getId());
+		sql.append(" update sys_api_alpha set `sql` = ?, request_method = ?, is_use = ? where id = ? ");
+		super.getJdbcTemplate().update(sql.toString(), param.getSql(), param.getRequestMethod(), param.getIsUse(), param.getId());
 	}
 
 	@Override

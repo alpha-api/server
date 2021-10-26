@@ -12,7 +12,7 @@ public class AlphaParam {
     @NotNull(message = "明细id不能为空", groups = {UpdateGroup.class})
     private Integer id;
 
-    @NotBlank(message = "请求方法不能为空", groups = {SaveGroup.class})
+    @NotBlank(message = "请求方法不能为空", groups = {UpdateGroup.class})
     private String requestMethod;
 
     @NotBlank(message = "SQL不能为空", groups = {SaveGroup.class})
